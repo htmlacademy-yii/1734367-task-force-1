@@ -74,17 +74,7 @@ interface TaskInterface
 	 * @version 1.0, 13.04.2021
 	 *
 	 * @param string $status Актуальный статус задания
-	 * @return string
+	 * @return array
 	 */
-	public function getAction(string $status): string;
-
-	/**
-	 * Устанавливает статус задания (Приватный метод)
-	 *
-	 * @version 1.0, 13.04.2021
-	 *
-	 * @param string $taskStatus Статус задания
-	 * @return void
-	 */
-	public function setStatus(string $taskStatus);
+	public function getAction(string $status): array;
 }
