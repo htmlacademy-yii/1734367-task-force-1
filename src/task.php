@@ -1,5 +1,7 @@
 <?php
 
+require_once 'taskinterface.php';
+
 /**
  * Класс для работы с заданием
  *
