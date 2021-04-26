@@ -97,4 +97,30 @@ class Task implements TaskInterface
 			'customer' => self::ACTIONS_TASK[$customerActionTask], // заказчик
 		];
 	}
+
+	/**
+	 * Возвращает карту статусов задания
+	 *
+	 * @author Kirill Markin
+	 * @version 1.0, 26.04.2021
+	 *
+	 * @return array
+	 */
+	public static function getStatusesMap(): array
+	{
+		return self::STATUSES_TASK;
+	}
+
+	/**
+	 * Возвращает карту действий задания
+	 *
+	 * @author Kirill Markin
+	 * @version 1.0, 26.04.2021
+	 *
+	 * @return array
+	 */
+	public static function getActionsMap(): array
+	{
+		return self::ACTIONS_TASK;
+	}
 }
