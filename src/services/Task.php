@@ -1,6 +1,8 @@
 <?php
 
-require_once 'taskinterface.php';
+namespace taskforce\services;
+
+use taskforce\models\TaskInterface;
 
 /**
  * Класс для работы с заданием

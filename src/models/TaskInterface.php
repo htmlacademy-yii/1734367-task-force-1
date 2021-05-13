@@ -1,5 +1,7 @@
 <?php
 
+namespace taskforce\models;
+
 /**
  * Интерфейс задания
  *

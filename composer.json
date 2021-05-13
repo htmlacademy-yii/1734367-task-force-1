@@ -1,0 +1,16 @@
+{
+	"name": "marka/task-force",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Kirill Markin",
+			"email": "marka0000@list.ru"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"taskforce\\": "src/"
+		}
+	},
+	"require": {}
+}
