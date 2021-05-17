@@ -2,8 +2,6 @@
 
 namespace taskforce\services;
 
-use taskforce\models\TaskInterface;
-
 /**
  * Класс для работы с заданием
  *
