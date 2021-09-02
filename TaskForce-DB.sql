@@ -1,99 +1,99 @@
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) UNIQUE NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `city_id` int NOT NULL,
-  `created_at` datetime DEFAULT (now()),
-  `updated_at` datetime DEFAULT (now())
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(30) NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `city_id` INT(11) UNSIGNED NOT NULL,
+    `created_at` DATETIME DEFAULT SYSDATE(),
+    `updated_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `profile` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `role` ENUM ('customer', 'performer') DEFAULT "customer",
-  `rating` float,
-  `date_birthday` datetime,
-  `biography` varchar(255),
-  `avatar` varchar(255),
-  `phone` varchar(255),
-  `skype` varchar(255),
-  `telegram` varchar(255),
-  `last_activity` timestamp,
-  `updated_at` datetime DEFAULT (now())
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11) UNSIGNED NOT NULL,
+    `role` ENUM('customer', 'performer') DEFAULT 'customer',
+    `rating` FLOAT,
+    `date_birthday` DATETIME,
+    `biography` VARCHAR(255),
+    `avatar` VARCHAR(255),
+    `phone` VARCHAR(20),
+    `skype` VARCHAR(50),
+    `telegram` VARCHAR(50),
+    `last_activity` TIMESTAMP,
+    `updated_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `cities` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `city` varchar(255) NOT NULL
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `city` VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE `categories` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `category` varchar(255) NOT NULL
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `category` VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE `profile_category` (
-  `profile_id` int,
-  `category_id` int
+    `profile_id` INT(11) UNSIGNED,
+    `category_id` INT(11) UNSIGNED
 );
 
 CREATE TABLE `tasks` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `content` varchar(255) NOT NULL,
-  `category_id` int NOT NULL,
-  `status_id` int DEFAULT 1,
-  `cost` int NOT NULL,
-  `customer_id` int NOT NULL,
-  `performer_id` int,
-  `city_id` int,
-  `geo_latitude` float,
-  `geo_longitude` float,
-  `date_limit` timestamp NOT NULL,
-  `date_published` datetime,
-  `created_at` datetime DEFAULT (now()),
-  `updated_at` datetime DEFAULT (now())
+     `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+     `title` VARCHAR(30) NOT NULL,
+     `content` VARCHAR(255) NOT NULL,
+     `category_id` INT(11) UNSIGNED NOT NULL,
+     `status_id` INT(11) UNSIGNED DEFAULT 1,
+     `cost` INT(11) UNSIGNED NOT NULL,
+     `customer_id` INT(11) UNSIGNED NOT NULL,
+     `performer_id` INT(11) UNSIGNED,
+     `city_id` INT(11) UNSIGNED,
+     `geo_latitude` FLOAT,
+     `geo_longitude` FLOAT,
+     `date_limit` TIMESTAMP NOT NULL,
+     `date_published` TIMESTAMP,
+     `created_at` DATETIME DEFAULT SYSDATE(),
+     `updated_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `statuses` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `status` varchar(255) NOT NULL
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `status` VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE `path_files` (
-  `task_id` int,
-  `path` varchar(255)
+    `task_id` INT(11) UNSIGNED,
+    `path` VARCHAR(255)
 );
 
 CREATE TABLE `messages` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `task_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `message` varchar(255),
-  `created_at` datetime DEFAULT (now())
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `task_id` INT(11) UNSIGNED NOT NULL,
+    `user_id` INT(11) UNSIGNED NOT NULL,
+    `message` VARCHAR(255),
+    `created_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `reviews` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `task_id` int NOT NULL,
-  `value` int NOT NULL,
-  `comment` varchar(255),
-  `created_at` datetime DEFAULT (now())
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `task_id` INT(11) UNSIGNED NOT NULL,
+    `value` INT(11) NOT NULL,
+    `comment` VARCHAR(255),
+    `created_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `responses` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `task_id` int NOT NULL,
-  `performer_id` int,
-  `value` int,
-  `created_at` datetime DEFAULT (now())
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `task_id` INT(11) UNSIGNED NOT NULL,
+    `performer_id` INT(11) UNSIGNED,
+    `value` INT(11),
+    `created_at` DATETIME DEFAULT SYSDATE()
 );
 
 CREATE TABLE `favorites` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `customer_id` int NOT NULL,
-  `performer_id` int NOT NULL
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT(11) UNSIGNED NOT NULL,
+    `performer_id` INT(11) UNSIGNED NOT NULL
 );
 
 ALTER TABLE `profile` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
