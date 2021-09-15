@@ -4,8 +4,8 @@ CREATE TABLE `users` (
     `email` VARCHAR(50) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `city_id` INT(11) UNSIGNED NOT NULL,
-    `created_at` DATETIME DEFAULT SYSDATE(),
-    `updated_at` DATETIME DEFAULT SYSDATE()
+    `created_at` DATETIME DEFAULT NOW(),
+    `updated_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `profile` (
@@ -20,7 +20,7 @@ CREATE TABLE `profile` (
     `skype` VARCHAR(50),
     `telegram` VARCHAR(50),
     `last_activity` TIMESTAMP,
-    `updated_at` DATETIME DEFAULT SYSDATE()
+    `updated_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `cities` (
@@ -52,8 +52,8 @@ CREATE TABLE `tasks` (
      `geo_longitude` FLOAT,
      `date_limit` TIMESTAMP NOT NULL,
      `date_published` TIMESTAMP,
-     `created_at` DATETIME DEFAULT SYSDATE(),
-     `updated_at` DATETIME DEFAULT SYSDATE()
+     `created_at` DATETIME DEFAULT NOW(),
+     `updated_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `statuses` (
@@ -71,7 +71,7 @@ CREATE TABLE `messages` (
     `task_id` INT(11) UNSIGNED NOT NULL,
     `user_id` INT(11) UNSIGNED NOT NULL,
     `message` VARCHAR(255),
-    `created_at` DATETIME DEFAULT SYSDATE()
+    `created_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `reviews` (
@@ -79,7 +79,7 @@ CREATE TABLE `reviews` (
     `task_id` INT(11) UNSIGNED NOT NULL,
     `value` INT(11) NOT NULL,
     `comment` VARCHAR(255),
-    `created_at` DATETIME DEFAULT SYSDATE()
+    `created_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `responses` (
@@ -87,7 +87,7 @@ CREATE TABLE `responses` (
     `task_id` INT(11) UNSIGNED NOT NULL,
     `performer_id` INT(11) UNSIGNED,
     `value` INT(11),
-    `created_at` DATETIME DEFAULT SYSDATE()
+    `created_at` DATETIME DEFAULT NOW()
 );
 
 CREATE TABLE `favorites` (

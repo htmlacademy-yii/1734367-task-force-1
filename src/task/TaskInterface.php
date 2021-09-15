@@ -1,58 +1,54 @@
 <?php
 
-namespace taskforce\services;
+namespace taskforce\task;
 
 /**
  * Интерфейс задания
- *
- * @version 1.0, 13.04.2021
  */
 interface TaskInterface
 {
 	/** Статус задания: новое (заказчик) */
-	const STATUS_NEW = 'new';
+	const STATUS_NEW = 'STATUS_NEW';
 	/** Статус задания: отменено (заказчик) */
-	const STATUS_CANCELED = 'canceled';
+	const STATUS_CANCEL = 'STATUS_CANCEL';
 	/** Статус задания: выполнено (заказчик) */
-	const STATUS_DONE = 'done';
+	const STATUS_DONE = 'STATUS_DONE';
 	/** Статус задания: в работе (исполнитель) */
-	const STATUS_ACTIVE = 'active';
+	const STATUS_ACTIVE = 'STATUS_ACTIVE';
 	/** Статус задания: провалено (исполнитель) */
-	const STATUS_FAILED = 'failed';
+	const STATUS_FAIL = 'STATUS_FAIL';
 
 	/** Действие: публикация задания (заказчик) */
-	const TASK_PUBLISHED = 'taskPublished';
+	const ACTION_PUBLISH = 'ACTION_PUBLISH';
 	/** Действие: отмена задания (заказчик) */
-	const TASK_CANCELED = 'taskCanceled';
+	const ACTION_CANCEL = 'ACTION_CANCEL';
 	/** Действие: завершение задания (заказчик) */
-	const TASK_COMPLETED = 'taskCompleted';
+	const ACTION_COMPLETE = 'ACTION_COMPLETE';
 	/** Действие: принятие задания (исполнитель) */
-	const TASK_ACCEPTED = 'taskAccepted';
+	const ACTION_ACCEPT = 'ACTION_ACCEPT';
 	/** Действие: отказ от задания (исполнитель) */
-	const TASK_FAILURE = 'taskFailure';
+	const ACTION_FAILURE = 'ACTION_FAILURE';
 
 	/** Массив соответствия статусов задания и их наименований */
-	const STATUSES_TASK = [
+	const STATUSES = [
 		self::STATUS_NEW => 'Новое',
-		self::STATUS_CANCELED => 'Отменено',
+		self::STATUS_CANCEL => 'Отменено',
 		self::STATUS_DONE => 'Выполнено',
 		self::STATUS_ACTIVE => 'В работе',
-		self::STATUS_FAILED => 'Провалено',
+		self::STATUS_FAIL => 'Провалено',
 	];
 
 	/** Массив соответствия действий задания и их наименований */
-	const ACTIONS_TASK = [
-		self::TASK_PUBLISHED => 'Публикация задания',
-		self::TASK_CANCELED => 'Отмена задания',
-		self::TASK_COMPLETED => 'Завершение задания',
-		self::TASK_ACCEPTED => 'Принятие задания',
-		self::TASK_FAILURE => 'Отказ от задания',
+	const ACTIONS = [
+		self::ACTION_PUBLISH => 'Публикация задания',
+		self::ACTION_CANCEL => 'Отмена задания',
+		self::ACTION_COMPLETE => 'Завершение задания',
+		self::ACTION_ACCEPT => 'Принятие задания',
+		self::ACTION_FAILURE => 'Отказ от задания',
 	];
 
 	/**
 	 * Конструктор интерфейса
-	 *
-	 * @version 1.0, 13.04.2021
 	 *
 	 * @param int $performerId Идентификатор исполнителя
 	 * @param int $customerId Идентификатор заказчика
@@ -63,8 +59,6 @@ interface TaskInterface
 	/**
 	 * Возвращает статус задания
 	 *
-	 * @version 1.0, 13.04.2021
-	 *
 	 * @param string $action Действие, выполненное над заданием
 	 * @return string
 	 */
@@ -73,18 +67,13 @@ interface TaskInterface
 	/**
 	 * Возвращает доступные действия для задания
 	 *
-	 * @version 1.0, 13.04.2021
-	 *
 	 * @param string $status Актуальный статус задания
-	 * @return array
+	 * @return object
 	 */
-	public function getAction(string $status): array;
+	public function getAction(string $status = '');
 
 	/**
 	 * Возвращает карту статусов задания
-	 *
-	 * @author Kirill Markin
-	 * @version 1.0, 26.04.2021
 	 *
 	 * @return array
 	 */
@@ -92,9 +81,6 @@ interface TaskInterface
 
 	/**
 	 * Возвращает карту действий задания
-	 *
-	 * @author Kirill Markin
-	 * @version 1.0, 26.04.2021
 	 *
 	 * @return array
 	 */
