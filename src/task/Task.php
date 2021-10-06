@@ -3,6 +3,8 @@
 namespace taskforce\task;
 
 use stdClass;
+use taskforce\exception\ActionException;
+use taskforce\exception\RoleException;
 
 /**
  * Класс для работы с заданием
@@ -29,16 +31,17 @@ class Task implements TaskInterface
 		$this->customerId = $customerId;
 	}
 
-	/**
-	 * Возвращает статус задания
-	 *
-	 * @param string $action Действие, выполненное над заданием
-	 * @return string
-	 */
+    /**
+     * Возвращает статус задания
+     *
+     * @param string $action Действие, выполненное над заданием
+     * @return string
+     * @throws ActionException
+     */
 	public function getStatus(string $action): string
 	{
 		if (!array_key_exists($action,self::ACTIONS)) {
-			return '';
+			throw new ActionException('Указанное действие "' . $action . '" не найдено в приложении!');
 		}
 
 		switch ($action) {
@@ -62,16 +65,17 @@ class Task implements TaskInterface
 				break;
 		}
 
-		return $statusTask ? self::STATUSES[$statusTask] : $statusTask;
+		return self::STATUSES[$statusTask];
 	}
 
-	/**
-	 * Возвращает объект класса действия для задания
-	 *
-	 * @param string $status Актуальный статус задания
-	 * @return object
-	 */
-	public function getAction(string $status = '')
+    /**
+     * Возвращает объект класса действия для задания
+     *
+     * @param string $status Актуальный статус задания
+     * @return AbstractAction
+     * @throws RoleException
+     */
+	public function getAction(string $status = ''): AbstractAction
 	{
         $userId = $this->getUserId();
         $className = stdClass::class;
@@ -100,7 +104,13 @@ class Task implements TaskInterface
                 break;
 		}
 
-       return new $className();
+        $action = new $className();
+
+        if (!$action instanceof AbstractAction) {
+            throw new RoleException('Роль не найдена в приложении!');
+        }
+
+       return $action;
 	}
 
 	/**
