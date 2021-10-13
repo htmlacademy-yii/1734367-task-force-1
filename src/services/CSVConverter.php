@@ -47,7 +47,7 @@ class CSVConverter
             throw new ConverterException('Не удалось открыть файл на чтение');
         }
 
-        $this->addDirectory($this->dir);
+        $this->addDirectory();
         $this->setFileName();
         $this->setHeaderData();
 
@@ -98,15 +98,14 @@ class CSVConverter
     /**
      * Создает директорию
      *
-     * @param string $dir Наименование директории
      * @return void
      * @throws ConverterException
      */
-    private function addDirectory(string $dir): void
+    private function addDirectory(): void
     {
-        $this->dirName = dirname($this->path) . '/' . $dir;
+        $this->dirName = dirname($this->path) . '/' . $this->dir;
         if (!file_exists($this->dirName) && !mkdir($this->dirName)) {
-            throw new ConverterException('Не удалось создать директорию ' . $dir);
+            throw new ConverterException('Не удалось создать директорию ' . $this->dir);
         }
     }
 
