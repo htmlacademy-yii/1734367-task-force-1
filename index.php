@@ -2,9 +2,11 @@
 
 require_once "vendor/autoload.php";
 
-use taskforce\exception\ActionException;
-use taskforce\exception\RoleException;
+use taskforce\exceptions\ActionException;
+use taskforce\exceptions\ConverterException;
+use taskforce\exceptions\RoleException;
 use taskforce\task\Task;
+use taskforce\services\CSVConverter;
 
 $task = new Task(11, 22);
 
@@ -31,9 +33,22 @@ try {
 }
 
 try {
-    $status = $task->getStatus('ACTION_EXCEPTION');
+    $task->getStatus('ACTION_EXCEPTION');
 } catch (ActionException $e) {
     echo '<pre> Ошибка получения статуса: ' . $e->getMessage() . '<pre>';
+}
+
+try {
+    $csvConverter = new CSVConverter();
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/categories.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/cities.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/opinions.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/profiles.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/replies.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/tasks.csv', 'sql');
+    $csvConverter->convertData($_SERVER['DOCUMENT_ROOT'] . '/data/users.csv', 'sql');
+} catch (ConverterException $e) {
+    var_dump($e->getMessage()); die();
 }
 
 echo('<pre>');
