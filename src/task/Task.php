@@ -3,8 +3,8 @@
 namespace taskforce\task;
 
 use stdClass;
-use taskforce\exception\ActionException;
-use taskforce\exception\RoleException;
+use taskforce\exceptions\ActionException;
+use taskforce\exceptions\RoleException;
 
 /**
  * Класс для работы с заданием
