@@ -22,8 +22,6 @@ use yii\db\ActiveRecord;
  * @property Favorite[] $favorites0
  * @property Profile[] $profiles
  * @property Response[] $responses
- * @property Task[] $tasks
- * @property Task[] $tasks0
  */
 class User extends ActiveRecord
 {
@@ -104,7 +102,7 @@ class User extends ActiveRecord
      */
     public function getProfiles()
     {
-        return $this->hasMany(Profile::class, ['user_id' => 'id']);
+        return $this->hasOne(Profile::class, ['user_id' => 'id']);
     }
 
     /**
@@ -115,25 +113,5 @@ class User extends ActiveRecord
     public function getResponses()
     {
         return $this->hasMany(Response::class, ['performer_id' => 'id']);
-    }
-
-    /**
-     * Gets query for Tasks.
-     *
-     * @return ActiveQuery
-     */
-    public function getTasks()
-    {
-        return $this->hasMany(Task::class, ['customer_id' => 'id']);
-    }
-
-    /**
-     * Gets query for Tasks0.
-     *
-     * @return ActiveQuery
-     */
-    public function getTasks0()
-    {
-        return $this->hasMany(Task::class, ['performer_id' => 'id']);
     }
 }
