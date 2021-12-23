@@ -12,7 +12,6 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $category
  *
- * @property ProfileCategory[] $profileCategories
  * @property Task[] $tasks
  */
 class Category extends ActiveRecord
@@ -45,16 +44,6 @@ class Category extends ActiveRecord
             'id' => 'ID',
             'category' => 'Категория',
         ];
-    }
-
-    /**
-     * Gets query for ProfileCategories.
-     *
-     * @return ActiveQuery
-     */
-    public function getProfileCategories()
-    {
-        return $this->hasMany(ProfileCategory::class, ['profile_id' => 'id']);
     }
 
     /**

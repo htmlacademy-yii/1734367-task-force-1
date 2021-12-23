@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -22,8 +22,10 @@ use yii\db\ActiveRecord;
  * @property string|null $last_activity
  * @property string|null $updated_at
  *
- * @property ProfileCategory[] $profileCategories
  * @property User $user
+ * @property Task[] $performerTasks
+ * @property Review[] PerformerReviews
+ * @property Category[] Categories
  */
 class Profile extends ActiveRecord
 {
@@ -75,16 +77,6 @@ class Profile extends ActiveRecord
     }
 
     /**
-     * Gets query for ProfileCategories.
-     *
-     * @return ActiveQuery
-     */
-    public function getProfileCategories()
-    {
-        return $this->hasMany(ProfileCategory::class, ['category_id' => 'id']);
-    }
-
-    /**
      * Gets query for User.
      *
      * @return ActiveQuery
@@ -92,5 +84,37 @@ class Profile extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for Categories.
+     *
+     * @return ActiveQuery
+     * @throws InvalidConfigException
+     */
+    public function getCategories()
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])
+            ->viaTable('profile_category', ['profile_id' => 'id']);
+    }
+
+    /**
+     * Gets query for Tasks.
+     *
+     * @return ActiveQuery
+     */
+    public function getPerformerTasks()
+    {
+        return $this->hasMany(Task::class, ['performer_id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for Reviews.
+     *
+     * @return ActiveQuery
+     */
+    public function getPerformerReviews()
+    {
+        return $this->hasMany(Review::class, ['performer_id' => 'user_id']);
     }
 }

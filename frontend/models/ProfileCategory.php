@@ -11,9 +11,6 @@ use yii\db\ActiveRecord;
  *
  * @property int|null $profile_id
  * @property int|null $category_id
- *
- * @property Profile $category
- * @property Category $profile
  */
 class ProfileCategory extends ActiveRecord
 {
@@ -46,25 +43,5 @@ class ProfileCategory extends ActiveRecord
             'profile_id' => 'ID профиля',
             'category_id' => 'ID категории',
         ];
-    }
-
-    /**
-     * Gets query for Category.
-     *
-     * @return ActiveQuery
-     */
-    public function getCategory()
-    {
-        return $this->hasOne(Profile::class, ['id' => 'category_id']);
-    }
-
-    /**
-     * Gets query for Profile.
-     *
-     * @return ActiveQuery
-     */
-    public function getProfile()
-    {
-        return $this->hasOne(Category::class, ['id' => 'profile_id']);
     }
 }
