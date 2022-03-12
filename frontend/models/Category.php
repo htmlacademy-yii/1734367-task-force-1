@@ -55,4 +55,12 @@ class Category extends ActiveRecord
     {
         return $this->hasMany(Task::class, ['category_id' => 'id']);
     }
+
+    /**
+     * @return array
+     */
+    public static function getCategories(): array
+    {
+        return self::find()->all();
+    }
 }

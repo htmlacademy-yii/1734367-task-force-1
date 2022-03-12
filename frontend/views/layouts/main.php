@@ -7,8 +7,6 @@ use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
 
 AppAsset::register($this);
 ?>
@@ -60,10 +58,10 @@ AppAsset::register($this);
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item">
-                        <a href="#">Задания</a>
+                        <?= Html::a("Задания", ['tasks/index']); ?>
                     </li>
                     <li class="site-list__item">
-                        <a href="#">Исполнители</a>
+                        <?= Html::a("Исполнители", ['users/index']); ?>
                     </li>
                     <li class="site-list__item">
                         <a href="#">Создать задание</a>
