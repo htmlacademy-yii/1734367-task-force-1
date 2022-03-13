@@ -50,7 +50,13 @@ class TaskForm extends Task
 
         // Фильтр по категориям
         if ($this->filterCategories) {
-            $query->andFilterWhere(['in', 'category_id', $this->filterCategories]);
+            $categories = [];
+            foreach ($this->filterCategories as $id => $value) {
+                if ($value) {
+                    $categories[] = $id;
+                }
+            }
+            $query->andFilterWhere(['in', 'category_id', $categories]);
         }
 
         // Фильтр по наличию отклика
