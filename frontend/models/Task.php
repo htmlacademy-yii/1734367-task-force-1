@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
@@ -39,6 +38,11 @@ use yii\db\ActiveRecord;
  */
 class Task extends ActiveRecord
 {
+    public const ONE_DAY = 'oneDay';
+    public const ONE_WEEK = 'oneWeek';
+    public const ONE_MONTH = 'oneMonth';
+    public const ONE_YEAR = 'oneYear';
+
     /**
      * {@inheritdoc}
      */
@@ -199,5 +203,18 @@ class Task extends ActiveRecord
     public function getStatus()
     {
         return $this->hasOne(Status::class, ['id' => 'status_id']);
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getPeriodTime(): array
+    {
+        return [
+            self::ONE_DAY    => 'За день',
+            self::ONE_WEEK   => 'За неделю',
+            self::ONE_MONTH  => 'За месяц',
+            self::ONE_YEAR   => 'За год',
+        ];
     }
 }
