@@ -56,7 +56,9 @@ class TaskForm extends Task
                     $categories[] = $id;
                 }
             }
-            $query->andFilterWhere(['in', 'category_id', $categories]);
+            if ($categories) {
+                $query->andWhere(['in', 'category_id', $categories]);
+            }
         }
 
         // Фильтр по наличию отклика

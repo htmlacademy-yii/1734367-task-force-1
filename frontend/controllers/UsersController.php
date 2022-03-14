@@ -2,23 +2,27 @@
 
 namespace frontend\controllers;
 
+use frontend\forms\UserForm;
 use frontend\models\Category;
-use frontend\models\Profile;
-use frontend\models\ProfileCategory;
-use frontend\models\Task;
-use frontend\models\User;
+use Yii;
 use yii\web\Controller;
 
 class UsersController extends Controller
 {
     public function actionIndex()
     {
-        $users = User::find()
-            ->innerJoin('{{%profile}}', '{{%users}}.id = {{%profile}}.user_id')
-            ->where(['{{%profile}}.role' => 'performer'])
-            ->orderBy(['{{%users}}.created_at' => SORT_ASC])
-            ->all();
 
-        return $this->render('index', compact('users'));
+        $userForm = new UserForm();
+        $userForm->load(Yii::$app->request->post());
+        $userForm->validate();
+
+        $users = $userForm->search();
+        $categories = Category::getCategories();
+
+        return $this->render('index', [
+            'userForm' => $userForm,
+            'users' => $users,
+            'categories' => $categories,
+        ]);
     }
 }
