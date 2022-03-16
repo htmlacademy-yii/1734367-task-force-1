@@ -11,8 +11,9 @@ class UsersController extends Controller
 {
     public function actionIndex()
     {
-
         $userForm = new UserForm();
+        $userForm->setTitlePage('Исполнители');
+
         $userForm->load(Yii::$app->request->post());
         $userForm->validate();
 
@@ -24,5 +25,11 @@ class UsersController extends Controller
             'users' => $users,
             'categories' => $categories,
         ]);
+    }
+
+    public function actionView(int $id)
+    {
+        dd($id);
+        return [];
     }
 }

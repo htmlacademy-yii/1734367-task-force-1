@@ -4,6 +4,7 @@ use frontend\forms\TaskForm;
 use frontend\models\Category;
 use frontend\models\Task;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -13,7 +14,8 @@ use yii\widgets\ActiveForm;
 /* @var Category[] $categories */
 /* @var array $periodTime */
 
-$this->title = 'TaskForce';
+$this->title = $taskForm->getTitlePage();
+
 ?>
 
 <section class="new-task">
@@ -24,7 +26,7 @@ $this->title = 'TaskForce';
         <?php foreach($tasks as $task): ?>
             <div class="new-task__card">
                 <div class="new-task__title">
-                    <a href="#" class="link-regular"><h2><?= Html::encode($task->title) ?></h2></a>
+                    <a href="<?= Url::to(['tasks/view', 'id' => $task->id]); ?>" class="link-regular"><h2><?= Html::encode($task->title) ?></h2></a>
                     <a  class="new-task__type link-regular" href="#"><p><?= Html::encode($task->category->category) ?></p></a>
                 </div>
                 <div class="new-task__icon new-task__icon--<?= Html::encode($task->icon) ?>"></div>

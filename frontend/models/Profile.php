@@ -103,6 +103,16 @@ class Profile extends ActiveRecord
      *
      * @return ActiveQuery
      */
+    public function getCustomerTasks()
+    {
+        return $this->hasMany(Task::class, ['customer_id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for Tasks.
+     *
+     * @return ActiveQuery
+     */
     public function getPerformerTasks()
     {
         return $this->hasMany(Task::class, ['performer_id' => 'user_id']);

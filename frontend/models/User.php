@@ -2,9 +2,7 @@
 
 namespace frontend\models;
 
-use Yii;
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users".
@@ -23,7 +21,7 @@ use yii\db\ActiveRecord;
  * @property Profile[] $profiles
  * @property Response[] $responses
  */
-class User extends ActiveRecord
+class User extends BaseModel
 {
     /**
      * {@inheritdoc}

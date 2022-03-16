@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property int|null $task_id
  * @property string|null $path
+ * @property string|null $file_name
  *
  * @property Task $task
  */
@@ -32,6 +33,7 @@ class PathFile extends ActiveRecord
         return [
             [['task_id'], 'integer'],
             [['path'], 'string', 'max' => 255],
+            [['file_name'], 'string', 'max' => 100],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
         ];
     }
@@ -44,6 +46,7 @@ class PathFile extends ActiveRecord
         return [
             'task_id' => 'ID задания',
             'path' => 'Путь к файлу',
+            'file_name' => 'Название файла',
         ];
     }
 

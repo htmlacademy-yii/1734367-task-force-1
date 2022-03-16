@@ -16,6 +16,17 @@ use yii\db\ActiveRecord;
  */
 class Status extends ActiveRecord
 {
+    /** @var int Новое (заказчик) */
+    public const STATUS_NEW = 1;
+    /** @var int Отменено (заказчик) */
+    public const STATUS_CANCEL = 2;
+    /** @var int Выполнено (заказчик) */
+    public const STATUS_DONE = 3;
+    /** @var int В работе (исполнитель) */
+    public const STATUS_ACTIVE = 4;
+    /** @var int Провалено (исполнитель) */
+    public const STATUS_FAIL = 5;
+
     /**
      * {@inheritdoc}
      */

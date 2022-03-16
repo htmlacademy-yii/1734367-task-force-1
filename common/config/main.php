@@ -13,8 +13,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'tasks' => 'tasks/index',
-                'users' => 'users/index',
+                '<controller>' => '<controller>/index',
+                '<controller:[\w-]+>/<action:[\w-]+>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
     ],
