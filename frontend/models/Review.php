@@ -64,4 +64,14 @@ class Review extends ActiveRecord
     {
         return $this->hasOne(Task::class, ['id' => 'task_id']);
     }
+
+    /**
+     * Gets query for Customer Profile.
+     *
+     * @return ActiveQuery
+     */
+    public function getCustomerProfile()
+    {
+        return $this->hasOne(Profile::class, ['id' => 'customer_id']);
+    }
 }

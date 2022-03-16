@@ -4,8 +4,11 @@ namespace frontend\controllers;
 
 use frontend\forms\UserForm;
 use frontend\models\Category;
+use frontend\models\Profile;
+use frontend\models\User;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class UsersController extends Controller
 {
@@ -29,7 +32,24 @@ class UsersController extends Controller
 
     public function actionView(int $id)
     {
-        dd($id);
-        return [];
+        // !!!!! автаркам указать другой путь !!!!!!!!!
+
+        $user = User::findOne($id);
+
+        if (!$user instanceof User) {
+            throw new NotFoundHttpException();
+        }
+
+        /** @var Profile $profile */
+        $profile = $user->profiles;
+        if ($profile->isCustomer()) {
+            throw new NotFoundHttpException();
+        }
+
+        $user->setTitlePage('Пользователь');
+
+        return $this->render('view', [
+            'user' => $user,
+        ]);
     }
 }
