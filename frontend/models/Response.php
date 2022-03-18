@@ -12,7 +12,8 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $task_id
  * @property int|null $performer_id
- * @property int|null $value
+ * @property int|null $performer_cost
+ * @property string|null $performer_comment
  * @property string|null $created_at
  *
  * @property User $performer
@@ -35,8 +36,9 @@ class Response extends ActiveRecord
     {
         return [
             [['task_id'], 'required'],
-            [['task_id', 'performer_id', 'value'], 'integer'],
+            [['task_id', 'performer_id', 'performer_cost'], 'integer'],
             [['created_at'], 'safe'],
+            [['performer_comment'], 'string', 'max' => 255],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
             [['performer_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['performer_id' => 'id']],
         ];
@@ -51,7 +53,8 @@ class Response extends ActiveRecord
             'id' => 'ID',
             'task_id' => 'ID задания',
             'performer_id' => 'ID исполнителя',
-            'value' => 'Оценка',
+            'performer_cost' => 'Цена исполнителя',
+            'performer_comment' => 'Комментарий исполнителя',
             'created_at' => 'Время создания',
         ];
     }

@@ -4,6 +4,7 @@ use frontend\forms\UserForm;
 use frontend\models\Category;
 use frontend\models\User;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
 
@@ -12,7 +13,8 @@ use yii\widgets\ActiveForm;
 /* @var User[] $users */
 /* @var Category[] $categories */
 
-$this->title = 'Users';
+$this->title = $userForm->getTitlePage();
+
 ?>
 
 <section class="user__search">
@@ -28,12 +30,12 @@ $this->title = 'Users';
         <div class="content-view__feedback-card user__search-wrapper">
             <div class="feedback-card__top">
                 <div class="user__search-icon">
-                    <a href="#"><img src="<?= Html::encode($user->profiles->avatar) ?>" width="65" height="65"></a>
+                    <a href="<?= Url::to(['users/view', 'id' => $user->id]); ?>"><img src="<?= Html::encode($user->profiles->avatar) ?>" width="65" height="65"></a>
                     <span><?= Html::encode(count($user->profiles->performerTasks)) ?> заданий</span>
                     <span><?= Html::encode(count($user->profiles->performerReviews)) ?> отзывов</span>
                 </div>
                 <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name"><a href="#" class="link-regular"><?= Html::encode($user->name) ?></a></p>
+                    <p class="link-name"><a href="<?= Url::to(['users/view', 'id' => $user->id]); ?>" class="link-regular"><?= Html::encode($user->name) ?></a></p>
                     <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
                     <b><?= Html::encode($user->profiles->rating) ?></b>
                     <p class="user__search-content"><?= Html::encode($user->profiles->biography) ?></p>

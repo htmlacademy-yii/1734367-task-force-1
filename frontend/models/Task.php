@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use yii\db\ActiveQuery;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tasks".
@@ -36,7 +35,7 @@ use yii\db\ActiveRecord;
  * @property Review[] $reviews
  * @property Status $status
  */
-class Task extends ActiveRecord
+class Task extends BaseModel
 {
     public const ONE_DAY = 'oneDay';
     public const ONE_WEEK = 'oneWeek';
@@ -126,6 +125,16 @@ class Task extends ActiveRecord
     }
 
     /**
+     * Gets query for Performer.
+     *
+     * @return ActiveQuery
+     */
+    public function getPerformer()
+    {
+        return $this->hasOne(User::class, ['id' => 'performer_id']);
+    }
+
+    /**
      * Gets query for Messages.
      *
      * @return ActiveQuery
@@ -136,21 +145,21 @@ class Task extends ActiveRecord
     }
 
     /**
-     * Gets query for Messages0.
+     * Gets query for Costumer Messages.
      *
      * @return ActiveQuery
      */
-    public function getMessages0()
+    public function getCostumerMessages()
     {
         return $this->hasMany(Message::class, ['user_id' => 'customer_id']);
     }
 
     /**
-     * Gets query for Messages1.
+     * Gets query for Performer Messages.
      *
      * @return ActiveQuery
      */
-    public function getMessages1()
+    public function getPerformerMessages()
     {
         return $this->hasMany(Message::class, ['user_id' => 'performer_id']);
     }
@@ -163,16 +172,6 @@ class Task extends ActiveRecord
     public function getPathFiles()
     {
         return $this->hasMany(PathFile::class, ['task_id' => 'id']);
-    }
-
-    /**
-     * Gets query for Performer.
-     *
-     * @return ActiveQuery
-     */
-    public function getPerformer()
-    {
-        return $this->hasOne(User::class, ['id' => 'performer_id']);
     }
 
     /**

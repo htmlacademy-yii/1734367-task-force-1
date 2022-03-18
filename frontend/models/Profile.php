@@ -29,6 +29,11 @@ use yii\db\ActiveRecord;
  */
 class Profile extends ActiveRecord
 {
+    /** @var string Заказчик */
+    public const ROLE_CUSTOMER = 'customer';
+    /** @var string Исполнитель */
+    public const ROLE_PERFORMER = 'performer';
+
     /**
      * {@inheritdoc}
      */
@@ -103,6 +108,16 @@ class Profile extends ActiveRecord
      *
      * @return ActiveQuery
      */
+    public function getCustomerTasks()
+    {
+        return $this->hasMany(Task::class, ['customer_id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for Tasks.
+     *
+     * @return ActiveQuery
+     */
     public function getPerformerTasks()
     {
         return $this->hasMany(Task::class, ['performer_id' => 'user_id']);
@@ -116,5 +131,10 @@ class Profile extends ActiveRecord
     public function getPerformerReviews()
     {
         return $this->hasMany(Review::class, ['performer_id' => 'user_id']);
+    }
+
+    public function isCustomer()
+    {
+        return $this->role === self::ROLE_CUSTOMER;
     }
 }

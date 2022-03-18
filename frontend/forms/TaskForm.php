@@ -2,6 +2,7 @@
 
 namespace frontend\forms;
 
+use frontend\models\Status;
 use frontend\models\Task;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
@@ -46,7 +47,7 @@ class TaskForm extends Task
      */
     public function search(): array
     {
-        $query = Task::find();
+        $query = Task::find()->where(['status_id' => Status::STATUS_NEW]);
 
         // Фильтр по категориям
         if ($this->filterCategories) {
@@ -61,9 +62,9 @@ class TaskForm extends Task
             }
         }
 
-        // Фильтр по наличию отклика
         if ($this->filterHasResponse) {
-            $query->andFilterWhere(['is', 'performer_id', new Expression('null')]);
+            $query->leftJoin('{{%responses}}', '{{%tasks}}.id = {{%responses}}.task_id')
+                ->andFilterWhere(['is', '{{%responses}}.task_id', new Expression('null')]);
         }
 
         // Фильтр по наличию удаленной работы
