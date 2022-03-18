@@ -9,9 +9,6 @@ use yii\web\Controller;
 use Yii;
 use yii\web\NotFoundHttpException;
 
-/*
- * Tasks controller
- */
 class TasksController extends Controller
 {
     public function actionIndex()

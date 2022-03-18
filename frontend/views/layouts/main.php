@@ -1,15 +1,18 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
+use yii\web\View;
+
+/* @var View $this */
+/* @var $content string */
 
 AppAsset::register($this);
+
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
@@ -182,4 +185,4 @@ AppAsset::register($this);
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage(); ?>

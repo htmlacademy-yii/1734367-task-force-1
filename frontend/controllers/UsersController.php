@@ -32,8 +32,6 @@ class UsersController extends Controller
 
     public function actionView(int $id)
     {
-        // !!!!! автаркам указать другой путь !!!!!!!!!
-
         $user = User::findOne($id);
 
         if (!$user instanceof User) {
