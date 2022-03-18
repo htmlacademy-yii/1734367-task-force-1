@@ -59,7 +59,7 @@ $address = 'Россия, ' . $user->city->city . ', ' . $userOldFormatter;
                 </div>
             </div>
             <div class="user__card-photo">
-                <h3 class="content-view__h3">Фото работ</h3> <!-- $user->profiles->performerTasks[0]->pathFiles[0] -->
+                <h3 class="content-view__h3">Фото работ</h3>
 
                 <?php foreach($user->profiles->performerTasks as $task): ?>
                     <?php foreach($task->pathFiles as $pathFile): ?>
