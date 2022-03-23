@@ -2,9 +2,9 @@
 
 namespace frontend\models;
 
-use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "cities".
@@ -65,5 +65,14 @@ class City extends ActiveRecord
     public function getUsers()
     {
         return $this->hasMany(User::class, ['city_id' => 'id']);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCities(): array
+    {
+        $cities = self::find()->asArray()->all();
+        return ArrayHelper::map($cities, 'id', 'city');
     }
 }

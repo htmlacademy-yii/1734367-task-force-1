@@ -1,15 +1,19 @@
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
+use yii\helpers\Url;
+use yii\web\View;
+
+/* @var View $this */
+/* @var $content string */
 
 AppAsset::register($this);
+
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
@@ -58,10 +62,10 @@ AppAsset::register($this);
             <div class="header__nav">
                 <ul class="header-nav__list site-list">
                     <li class="site-list__item">
-                        <?= Html::a("Задания", ['tasks/index']); ?>
+                        <?= Html::a("Задания", Url::to(['tasks/index'])); ?>
                     </li>
                     <li class="site-list__item">
-                        <?= Html::a("Исполнители", ['users/index']); ?>
+                        <?= Html::a("Исполнители", Url::to(['users/index'])); ?>
                     </li>
                     <li class="site-list__item">
                         <a href="#">Создать задание</a>
@@ -98,7 +102,7 @@ AppAsset::register($this);
             </div>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="./img/user-photo.png"
+                    <img src="/img/user-photo.png"
                          width="43" height="44"
                          alt="Аватар пользователя">
                 </a>
@@ -169,11 +173,27 @@ AppAsset::register($this);
             <div class="page-footer__copyright">
                 <a>
                     <img class="copyright-logo"
-                         src="./img/academy-logo.png"
+                         src="/img/academy-logo.png"
                          width="185" height="63"
                          alt="Логотип HTML Academy">
                 </a>
             </div>
+
+            <?php if (\Yii::$app->controller->id === 'registration') { ?>
+                <div class="clipart-woman">
+                    <img src="/img/clipart-woman.png" width="238" height="450">
+                </div>
+                <div class="clipart-message">
+                    <div class="clipart-message-text">
+                        <h2>Знаете ли вы, что?</h2>
+                        <p>После регистрации вам будет доступно более
+                            двух тысяч заданий из двадцати разных категорий.</p>
+                        <p>В среднем, наши исполнители зарабатывают
+                            от 500 рублей в час.</p>
+                    </div>
+                </div>
+            <?php } ?>
+
         </div>
     </footer>
 
@@ -182,4 +202,4 @@ AppAsset::register($this);
 <?php $this->endBody() ?>
 </body>
 </html>
-<?php $this->endPage();
+<?php $this->endPage(); ?>

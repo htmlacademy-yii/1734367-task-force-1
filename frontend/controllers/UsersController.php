@@ -15,7 +15,6 @@ class UsersController extends Controller
     public function actionIndex()
     {
         $userForm = new UserForm();
-        $userForm->setTitlePage('Исполнители');
 
         $userForm->load(Yii::$app->request->post());
         $userForm->validate();
@@ -24,6 +23,7 @@ class UsersController extends Controller
         $categories = Category::getCategories();
 
         return $this->render('index', [
+            'title' => 'Исполнители',
             'userForm' => $userForm,
             'users' => $users,
             'categories' => $categories,
@@ -32,8 +32,6 @@ class UsersController extends Controller
 
     public function actionView(int $id)
     {
-        // !!!!! автаркам указать другой путь !!!!!!!!!
-
         $user = User::findOne($id);
 
         if (!$user instanceof User) {
@@ -46,9 +44,8 @@ class UsersController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $user->setTitlePage('Пользователь');
-
         return $this->render('view', [
+            'title' => 'Пользователь',
             'user' => $user,
         ]);
     }

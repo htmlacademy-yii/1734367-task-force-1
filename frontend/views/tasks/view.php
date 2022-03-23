@@ -6,9 +6,10 @@ use yii\helpers\Url;
 use yii\web\View;
 
 /* @var View $this */
+/* @var string $title */
 /* @var Task $task */
 
-$this->title = $task->getTitlePage();
+$this->title = $title;
 
 $regDate = Yii::$app->formatter->format(strtotime($task->customer->created_at), 'relativeTime');
 $regDateList = array_slice(explode(' ', $regDate), 0, -1);

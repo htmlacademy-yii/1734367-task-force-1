@@ -9,12 +9,13 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 
 /* @var View $this */
+/* @var string $title */
 /* @var TaskForm $taskForm */
 /* @var Task[] $tasks */
 /* @var Category[] $categories */
 /* @var array $periodTime */
 
-$this->title = $taskForm->getTitlePage();
+$this->title = $title;
 
 ?>
 
@@ -63,57 +64,57 @@ $this->title = $taskForm->getTitlePage();
             'options' => ['class' => 'search-task__form', 'enctype' => 'multipart/form-data'],
         ]); ?>
 
-        <fieldset class="search-task__categories">
-            <legend>Категории</legend>
-            <!-- Фильтр Категории -->
-            <?php foreach ($categories as $category): ?>
-                <?= $form->field($taskForm, "filterCategories[$category->id]", [
+            <fieldset class="search-task__categories">
+                <legend>Категории</legend>
+                <!-- Фильтр Категории -->
+                <?php foreach ($categories as $category): ?>
+                    <?= $form->field($taskForm, "filterCategories[$category->id]", [
+                            'template' => "{input}{label}",
+                            'options' => ['tag' => false]
+                        ])
+                        ->checkbox(['class' => 'visually-hidden checkbox__input'], false)
+                        ->label($category->category); ?>
+                <?php endforeach; ?>
+            </fieldset>
+
+            <fieldset class="search-task__categories">
+                <legend>Дополнительно</legend>
+                <!-- Фильтр Наличие отклика -->
+                <?= $form->field($taskForm, 'filterHasResponse', [
                         'template' => "{input}{label}",
                         'options' => ['tag' => false]
                     ])
-                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false)
-                    ->label($category->category); ?>
-            <?php endforeach; ?>
-        </fieldset>
+                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
 
-        <fieldset class="search-task__categories">
-            <legend>Дополнительно</legend>
-            <!-- Фильтр Наличие отклика -->
-            <?= $form->field($taskForm, 'filterHasResponse', [
-                    'template' => "{input}{label}",
+                <!-- Фильтр Удаленная работа -->
+                <?= $form->field($taskForm, 'filterHasRemoteWork', [
+                        'template' => "{input}{label}",
+                        'options' => ['tag' => false]
+                    ])
+                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+            </fieldset>
+
+            <!-- Фильтр Период -->
+            <?= $form->field($taskForm, 'filterPeriodTime', [
+                    'template' => "{label}{input}",
                     'options' => ['tag' => false]
                 ])
-                ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+                ->dropDownList($periodTime, ['class' => 'multiple-select input'])
+                ->label($taskForm->attributes['filterPeriodTime'], [
+                        'options' => [Task::ONE_YEAR => ['Selected' => true]],
+                        'class' => 'search-task__name'
+                ]); ?>
 
-            <!-- Фильтр Удаленная работа -->
-            <?= $form->field($taskForm, 'filterHasRemoteWork', [
-                    'template' => "{input}{label}",
-                    'options' => ['tag' => false]
+            <!-- Фильтр Поиск по названию -->
+            <?= $form->field($taskForm, 'searchByTitle', [
+                    'template' => "{label}{input}",
+                    'options' => ['tag' => false],
                 ])
-                ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
-        </fieldset>
+                ->textInput(['class' => 'input-middle input', 'type' => 'search'])
+                ->label($taskForm->attributes['searchByTitle'], ['class' => 'search-task__name']); ?>
 
-        <!-- Фильтр Период -->
-        <?= $form->field($taskForm, 'filterPeriodTime', [
-                'template' => "{label}{input}",
-                'options' => ['tag' => false]
-            ])
-            ->dropDownList($periodTime, ['class' => 'multiple-select input'])
-            ->label($taskForm->attributes['filterPeriodTime'], [
-                    'options' => [Task::ONE_YEAR => ['Selected' => true]],
-                    'class' => 'search-task__name'
-            ]); ?>
-
-        <!-- Фильтр Поиск по названию -->
-        <?= $form->field($taskForm, 'searchByTitle', [
-                'template' => "{label}{input}",
-                'options' => ['tag' => false],
-            ])
-            ->textInput(['class' => 'input-middle input', 'type' => 'search'])
-            ->label($taskForm->attributes['searchByTitle'], ['class' => 'search-task__name']); ?>
-
-        <!-- Кнопка Поиск -->
-        <?= Html::submitButton('Искать', ['class' => 'button']); ?>
+            <!-- Кнопка Поиск -->
+            <?= Html::submitButton('Искать', ['class' => 'button']); ?>
 
         <?php ActiveForm::end(); ?>
     </div>

@@ -9,11 +9,12 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 
 /* @var View $this */
+/* @var string $title */
 /* @var UserForm $userForm */
 /* @var User[] $users */
 /* @var Category[] $categories */
 
-$this->title = $userForm->getTitlePage();
+$this->title = $title;
 
 ?>
 
@@ -64,60 +65,60 @@ $this->title = $userForm->getTitlePage();
             'options' => ['class' => 'search-task__form', 'enctype' => 'multipart/form-data']
         ]) ?>
 
-        <fieldset class="search-task__categories">
-            <legend>Категории</legend>
-            <!-- Фильтр Категории -->
-            <?php foreach ($categories as $category): ?>
-                <?= $form->field($userForm, "filterCategories[$category->id]", [
+            <fieldset class="search-task__categories">
+                <legend>Категории</legend>
+                <!-- Фильтр Категории -->
+                <?php foreach ($categories as $category): ?>
+                    <?= $form->field($userForm, "filterCategories[$category->id]", [
+                        'template' => "{input}{label}",
+                        'options' => ['tag' => false]
+                    ])
+                        ->checkbox(['class' => 'visually-hidden checkbox__input'], false)
+                        ->label($category->category); ?>
+                <?php endforeach; ?>
+            </fieldset>
+
+            <fieldset class="search-task__categories">
+                <legend>Дополнительно</legend>
+                <!-- Фильтр Сейчас свободен -->
+                <?= $form->field($userForm, 'filterHasFree',[
                     'template' => "{input}{label}",
                     'options' => ['tag' => false]
                 ])
-                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false)
-                    ->label($category->category); ?>
-            <?php endforeach; ?>
-        </fieldset>
-
-        <fieldset class="search-task__categories">
-            <legend>Дополнительно</legend>
-            <!-- Фильтр Сейчас свободен -->
-            <?= $form->field($userForm, 'filterHasFree',[
-                'template' => "{input}{label}",
-                'options' => ['tag' => false]
-            ])
-            ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
-
-            <!-- Фильтр Сейчас онлайн -->
-            <?= $form->field($userForm, 'filterHasOnline',[
-                'template' => "{input}{label}",
-                'options' => ['tag' => false]
-            ])
                 ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
 
-            <!-- Фильтр Наличие отзывов -->
-            <?= $form->field($userForm, 'filterHasReviews',[
-                'template' => "{input}{label}",
-                'options' => ['tag' => false]
+                <!-- Фильтр Сейчас онлайн -->
+                <?= $form->field($userForm, 'filterHasOnline',[
+                    'template' => "{input}{label}",
+                    'options' => ['tag' => false]
+                ])
+                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+
+                <!-- Фильтр Наличие отзывов -->
+                <?= $form->field($userForm, 'filterHasReviews',[
+                    'template' => "{input}{label}",
+                    'options' => ['tag' => false]
+                ])
+                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+
+                <!-- Фильтр Наличие в избранном -->
+                <?= $form->field($userForm, 'filterHasFavorites',[
+                    'template' => "{input}{label}",
+                    'options' => ['tag' => false]
+                ])
+                    ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+            </fieldset>
+
+            <!-- Фильтр Поиск по имени -->
+            <?= $form->field($userForm, 'searchByName', [
+                'template' => "{label}{input}",
+                'options' => ['tag' => false],
             ])
-                ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
+                ->textInput(['class' => 'input-middle input', 'type' => 'search'])
+                ->label($userForm->attributes['searchByName'], ['class' => 'search-task__name']); ?>
 
-            <!-- Фильтр Наличие в избранном -->
-            <?= $form->field($userForm, 'filterHasFavorites',[
-                'template' => "{input}{label}",
-                'options' => ['tag' => false]
-            ])
-                ->checkbox(['class' => 'visually-hidden checkbox__input'], false); ?>
-        </fieldset>
-
-        <!-- Фильтр Поиск по имени -->
-        <?= $form->field($userForm, 'searchByName', [
-            'template' => "{label}{input}",
-            'options' => ['tag' => false],
-        ])
-            ->textInput(['class' => 'input-middle input', 'type' => 'search'])
-            ->label($userForm->attributes['searchByName'], ['class' => 'search-task__name']); ?>
-
-        <!-- Кнопка Поиск -->
-        <?= Html::submitButton('Искать', ['class' => 'button']); ?>
+            <!-- Кнопка Поиск -->
+            <?= Html::submitButton('Искать', ['class' => 'button']); ?>
 
         <?php ActiveForm::end(); ?>
     </div>

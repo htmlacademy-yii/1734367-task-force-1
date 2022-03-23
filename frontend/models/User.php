@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users".
@@ -12,6 +13,7 @@ use yii\db\ActiveQuery;
  * @property string $email
  * @property string $password
  * @property int $city_id
+ * @property int $status
  * @property string|null $created_at
  * @property string|null $updated_at
  *
@@ -21,7 +23,7 @@ use yii\db\ActiveQuery;
  * @property Profile[] $profiles
  * @property Response[] $responses
  */
-class User extends BaseModel
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,11 +40,12 @@ class User extends BaseModel
     {
         return [
             [['name', 'email', 'password', 'city_id'], 'required'],
-            [['city_id'], 'integer'],
+            [['city_id', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 50],
             [['password'], 'string', 'max' => 255],
+            [['status'], 'default', 'value' => 1],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
@@ -58,6 +61,7 @@ class User extends BaseModel
             'email' => 'Email',
             'password' => 'Пароль',
             'city_id' => 'ID города',
+            'status' => 'Статус',
             'created_at' => 'Время создания',
             'updated_at' => 'Время обновления',
         ];
