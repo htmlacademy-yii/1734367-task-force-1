@@ -5,9 +5,10 @@ use yii\helpers\Html;
 use yii\web\View;
 
 /* @var View $this */
+/* @var string $title */
 /* @var User $user */
 
-$this->title = $user->getTitlePage();
+$this->title = $title;
 
 $userOld = Yii::$app->formatter->format(strtotime($user->profiles->date_birthday), 'relativeTime');
 $userOldList = array_slice(explode(' ', $userOld), 0, -1);

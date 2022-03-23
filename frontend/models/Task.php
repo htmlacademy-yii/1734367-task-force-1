@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tasks".
@@ -35,7 +36,7 @@ use yii\db\ActiveQuery;
  * @property Review[] $reviews
  * @property Status $status
  */
-class Task extends BaseModel
+class Task extends ActiveRecord
 {
     public const ONE_DAY = 'oneDay';
     public const ONE_WEEK = 'oneWeek';

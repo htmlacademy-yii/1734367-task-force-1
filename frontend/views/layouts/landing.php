@@ -3,6 +3,7 @@
 use frontend\assets\AppAsset;
 use yii\bootstrap4\Html;
 use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\web\View;
 
 /* @var View $this */
@@ -59,7 +60,7 @@ $tasks = $this->context->getLandingTasks();
                 <a href="#" class="header__account-enter open-modal" data-for="enter-form">
                     <span>Вход</span></a>
                 или
-                <a href="signup.html" class="header__account-registration">
+                <a href="<?= Url::to(['registration/index']); ?>" class="header__account-registration">
                     Регистрация
                 </a>
             </div>

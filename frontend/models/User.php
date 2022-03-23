@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users".
@@ -10,7 +11,7 @@ use yii\db\ActiveQuery;
  * @property int $id
  * @property string $name
  * @property string $email
- * @property string $password_hash
+ * @property string $password
  * @property int $city_id
  * @property int $status
  * @property string|null $created_at
@@ -22,7 +23,7 @@ use yii\db\ActiveQuery;
  * @property Profile[] $profiles
  * @property Response[] $responses
  */
-class User extends BaseModel
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -38,12 +39,12 @@ class User extends BaseModel
     public function rules()
     {
         return [
-            [['name', 'email', 'password_hash', 'city_id'], 'required'],
+            [['name', 'email', 'password', 'city_id'], 'required'],
             [['city_id', 'status'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 50],
-            [['password_hash'], 'string', 'max' => 255],
+            [['password'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
             [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::class, 'targetAttribute' => ['city_id' => 'id']],
         ];
@@ -58,7 +59,7 @@ class User extends BaseModel
             'id' => 'ID',
             'name' => 'Имя',
             'email' => 'Email',
-            'password_hash' => 'Пароль',
+            'password' => 'Пароль',
             'city_id' => 'ID города',
             'status' => 'Статус',
             'created_at' => 'Время создания',

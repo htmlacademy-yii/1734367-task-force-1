@@ -14,7 +14,6 @@ class TasksController extends Controller
     public function actionIndex()
     {
         $taskForm = new TaskForm();
-        $taskForm->setTitlePage('Задания');
 
         $taskForm->load(Yii::$app->request->post());
         $taskForm->validate();
@@ -24,6 +23,7 @@ class TasksController extends Controller
         $periodTime = Task::getPeriodTime();
 
         return $this->render('index', [
+            'title' => 'Задания',
             'taskForm' => $taskForm,
             'tasks' => $tasks,
             'categories' => $categories,
@@ -39,9 +39,8 @@ class TasksController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $task->setTitlePage('Задание');
-
         return $this->render('view', [
+            'title' => 'Задание',
             'task' => $task,
         ]);
     }
