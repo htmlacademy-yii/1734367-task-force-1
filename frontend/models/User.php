@@ -2,8 +2,10 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "users".
@@ -23,7 +25,7 @@ use yii\db\ActiveRecord;
  * @property Profile[] $profiles
  * @property Response[] $responses
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -116,4 +118,47 @@ class User extends ActiveRecord
     {
         return $this->hasMany(Response::class, ['performer_id' => 'id']);
     }
+
+    /**
+     * @param string $password
+     * @return bool
+     */
+    public function validatePassword(string $password): bool
+    {
+        return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    /**
+     * @param string|int $id
+     * @return User|null
+     */
+    public static function findIdentity($id): ?User
+    {
+        return self::findOne($id);
+    }
+
+    /**
+     * @return string|int
+     */
+    public function getId()
+    {
+        return $this->getPrimaryKey();
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        // TODO: Implement findIdentityByAccessToken() method.
+    }
+
+    public function getAuthKey()
+    {
+        // TODO: Implement getAuthKey() method.
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        // TODO: Implement validateAuthKey() method.
+    }
+
+
 }

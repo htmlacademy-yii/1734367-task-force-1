@@ -17,6 +17,7 @@ class AppAsset extends AssetBundle
         'css/normalize.css',
     ];
     public $js = [
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
