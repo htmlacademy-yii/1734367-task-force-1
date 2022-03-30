@@ -38,6 +38,11 @@ class LandingController extends Controller
 
     public function actionLogin()
     {
+
+        // ВАЖНО
+        // 1) Добавить выход (и мб еще что-то)
+        // 2) Добавить в верстку данные заказчика
+
         $loginForm = new LoginForm();
 
         if (Yii::$app->request->isPost) {
