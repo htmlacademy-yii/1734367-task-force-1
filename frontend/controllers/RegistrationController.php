@@ -7,10 +7,33 @@ use frontend\models\City;
 use frontend\models\User;
 use Yii;
 use yii\base\Exception;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class RegistrationController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'denyCallback' => function($rule, $action) {
+                            return $action->controller->redirect('tasks');
+                        }
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * @return string
      * @throws Exception
