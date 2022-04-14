@@ -6,10 +6,11 @@ use yii\bootstrap4\ActiveForm;
 use frontend\forms\LoginForm;
 
 /* @var View $this */
-/* @var LoginForm $loginForm*/
 /* @var string $title */
 
-$this->title = $title;
+$this->title = 'Логин';
+
+$loginForm = new LoginForm();
 
 ?>
 

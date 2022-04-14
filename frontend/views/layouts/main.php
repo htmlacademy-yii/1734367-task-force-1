@@ -8,9 +8,11 @@ use yii\helpers\Url;
 use yii\web\View;
 
 /* @var View $this */
-/* @var $content string */
+/* @var string $content */
 
 AppAsset::register($this);
+
+$user = Yii::$app->user->identity;
 
 ?>
 
@@ -100,14 +102,16 @@ AppAsset::register($this);
                     <a href="#" class="link-regular">«Помочь с курсовой»</a>
                 </p>
             </div>
+
+            <!-- User account - start -->
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="/img/user-photo.png"
+                    <img src="<?= Html::encode($user->profiles->avatar) ?>"
                          width="43" height="44"
                          alt="Аватар пользователя">
                 </a>
                 <span class="header__account-name">
-                    Василий
+                    <?= Html::encode($user->name) ?>
                 </span>
             </div>
             <div class="account__pop-up">
@@ -119,10 +123,12 @@ AppAsset::register($this);
                         <a href="#">Настройки</a>
                     </li>
                     <li>
-                        <a href="#">Выход</a>
+                        <a href="<?= Url::to(['site/logout']); ?>">Выход</a>
                     </li>
                 </ul>
             </div>
+            <!-- User account - end -->
+
         </div>
     </header>
 

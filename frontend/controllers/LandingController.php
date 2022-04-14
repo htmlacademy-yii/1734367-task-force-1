@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use frontend\forms\LoginForm;
 use frontend\models\Status;
 use frontend\models\Task;
 use Yii;
@@ -57,29 +56,5 @@ class LandingController extends Controller
     public function getLandingTasks(): array
     {
         return $this->landingTasks;
-    }
-
-    public function actionLogin()
-    {
-
-        // ВАЖНО
-        // 1) Добавить выход (и мб еще что-то)
-        // 2) Добавить в верстку данные заказчика
-
-        $loginForm = new LoginForm();
-
-        if (Yii::$app->request->isPost) {
-            $loginForm->load(Yii::$app->request->post());
-
-            if ($loginForm->validate()) {
-                $user = $loginForm->getUser();
-                Yii::$app->user->login($user);
-                return $this->redirect(['tasks/index']);
-            }
-
-        }
-
-        Yii::$app->session->setFlash('error', 'Неправильный email или пароль');
-        return $this->redirect(Yii::$app->request->referrer);
     }
 }

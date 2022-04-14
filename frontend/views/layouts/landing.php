@@ -252,7 +252,7 @@ $loginForm = new LoginForm();
         <!-- Форма Входа -->
         <?php $form = ActiveForm::begin([
             'id' => 'login',
-            'action' => 'landing\login',
+            'action' => 'site\login',
             'fieldConfig' =>[
                 'template' => "{label}\n{input}",
                 'options' => ['tag' => false],
