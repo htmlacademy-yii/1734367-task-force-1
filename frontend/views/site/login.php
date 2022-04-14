@@ -1,41 +1,31 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap4\ActiveForm */
-/* @var $model \common\models\LoginForm */
-
+use yii\web\View;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\ActiveForm;
+use frontend\forms\LoginForm;
 
-$this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+/* @var View $this */
+/* @var string $title */
+
+$this->title = 'Логин';
+
+$loginForm = new LoginForm();
+
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
-                    <br>
-                    Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
-                </div>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-</div>
+<section class="form-modal" id="enter-form">
+    <?php $form = ActiveForm::begin([
+        'id' => 'login',
+        'fieldConfig' =>[
+            'template' => "{label}\n{input}",
+            'options' => ['tag' => false],
+            'inputOptions' => ['class' => 'enter-form-email input input-middle'],
+            'labelOptions' => ['class' => 'form-modal-description'],
+        ],
+    ]); ?>
+    <p><?= $form->field($loginForm, 'email')->textInput(['type' => 'email']); ?></p>
+    <p><?= $form->field($loginForm, 'password')->textInput(['type' => 'password']); ?></p>
+    <?= Html::submitButton('Войти', ['class' => 'button']); ?>
+    <?php ActiveForm::end(); ?>
+</section>

@@ -4,12 +4,36 @@ namespace frontend\controllers;
 
 use frontend\models\Status;
 use frontend\models\Task;
+use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class LandingController extends Controller
 {
     public $layout = 'landing';
     public $landingTasks = [];
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'denyCallback' => function($rule, $action) {
+                            return $action->controller->redirect('tasks');
+                        }
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {

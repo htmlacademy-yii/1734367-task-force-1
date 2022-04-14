@@ -5,11 +5,10 @@ namespace frontend\controllers;
 use frontend\forms\TaskForm;
 use frontend\models\Category;
 use frontend\models\Task;
-use yii\web\Controller;
 use Yii;
 use yii\web\NotFoundHttpException;
 
-class TasksController extends Controller
+class TasksController extends SecuredController
 {
     public function actionIndex()
     {

@@ -1,15 +1,19 @@
 <?php
 
 use frontend\assets\AppAsset;
+use frontend\forms\LoginForm;
 use yii\bootstrap4\Html;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use yii\web\View;
+use yii\widgets\ActiveForm;
 
 /* @var View $this */
 AppAsset::register($this);
 
 $tasks = $this->context->getLandingTasks();
+
+$loginForm = new LoginForm();
 
 ?>
 
@@ -68,6 +72,20 @@ $tasks = $this->context->getLandingTasks();
     </header>
     <main>
         <div class="landing-container">
+
+            <?php if(Yii::$app->session->hasFlash('error')):?>
+                <div class="info_flash"
+                     style="margin: 0 auto;
+                     width: 600px;
+                     text-align: center;
+                     background-color: #f9a6a6;
+                     border-radius: 5px;
+                     font-size: 12px;"
+                >
+                    <h1 style="margin-bottom: 0;"> <?php echo Yii::$app->session->getFlash('error'); ?></h1>
+                </div>
+            <?php endif; ?>
+
             <div class="landing-top">
                 <h1>Работа для всех.<br>
                     Найди исполнителя на любую задачу.</h1>
@@ -221,7 +239,7 @@ $tasks = $this->context->getLandingTasks();
             <div class="page-footer__copyright">
                 <a href="https://htmlacademy.ru">
                     <img class="copyright-logo"
-                         src="./img/academy-logo.png"
+                         src="/img/academy-logo.png"
                          width="185" height="63"
                          alt="Логотип HTML Academy">
                 </a>
@@ -230,18 +248,24 @@ $tasks = $this->context->getLandingTasks();
     </footer>
     <section class="modal enter-form form-modal" id="enter-form">
         <h2>Вход на сайт</h2>
-        <form action="#" method="post">
-            <p>
-                <label class="form-modal-description" for="enter-email">Email</label>
-                <input class="enter-form-email input input-middle" type="email" name="enter-email" id="enter-email">
-            </p>
-            <p>
-                <label class="form-modal-description" for="enter-password">Пароль</label>
-                <input class="enter-form-email input input-middle" type="password" name="enter-email" id="enter-password">
-            </p>
-            <button class="button" type="submit">Войти</button>
-        </form>
-        <button class="form-modal-close" type="button">Закрыть</button>
+
+        <!-- Форма Входа -->
+        <?php $form = ActiveForm::begin([
+            'id' => 'login',
+            'action' => 'site\login',
+            'fieldConfig' =>[
+                'template' => "{label}\n{input}",
+                'options' => ['tag' => false],
+                'inputOptions' => ['class' => 'enter-form-email input input-middle'],
+                'labelOptions' => ['class' => 'form-modal-description'],
+            ],
+        ]); ?>
+            <p><?= $form->field($loginForm, 'email')->textInput(['type' => 'email']); ?></p>
+            <p><?= $form->field($loginForm, 'password')->textInput(['type' => 'password']); ?></p>
+            <?= Html::submitButton('Войти', ['class' => 'button']); ?>
+        <?php ActiveForm::end(); ?>
+        <?= Html::submitButton('Закрыть', ['class' => 'form-modal-close']); ?>
+
     </section>
 </div>
 <div class="overlay"></div>
