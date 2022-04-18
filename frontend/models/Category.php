@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "categories".
@@ -62,5 +63,40 @@ class Category extends ActiveRecord
     public static function getCategories(): array
     {
         return self::find()->all();
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCategoriesList(): array
+    {
+        $cities = self::find()->asArray()->all();
+        return ArrayHelper::map($cities, 'id', 'category');
+    }
+
+    /**
+     * @param int $category_id
+     * @return string
+     */
+    public static function getIconByCategoryId(int $category_id): string
+    {
+        switch ($category_id) {
+            case 1:
+            case 2:
+            $icon = 'cargo';
+                break;
+            case 3:
+                $icon = 'translation';
+                break;
+            case 5:
+            case 6:
+                $icon = 'clean';
+                break;
+            default:
+                $icon = 'cargo';
+                break;
+        }
+
+        return $icon;
     }
 }

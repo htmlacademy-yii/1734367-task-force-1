@@ -42,10 +42,10 @@ class RegistrationController extends Controller
     {
         $registrationForm = new RegistrationForm();
 
-        $cities = City::getCities();
+        $cities = City::getCitiesList();
 
 
-        if (Yii::$app->request->isPost) {
+        if (Yii::$app->request->getIsPost()) {
             $registrationForm->load(Yii::$app->request->post());
 
             if ($registrationForm->validate()) {

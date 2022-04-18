@@ -70,7 +70,7 @@ $user = Yii::$app->user->identity;
                         <?= Html::a("Исполнители", Url::to(['users/index'])); ?>
                     </li>
                     <li class="site-list__item">
-                        <a href="#">Создать задание</a>
+                        <a href="<?= Url::to(['tasks/create']); ?>">Создать задание</a>
                     </li>
                     <li class="site-list__item">
                         <a href="#">Мой профиль</a>
