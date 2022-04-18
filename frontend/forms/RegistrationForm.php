@@ -13,8 +13,6 @@ class RegistrationForm extends Model
     public $password;
     public $city_id;
 
-    public $titlePage = 'TaskForce';
-
     public function rules()
     {
         return [

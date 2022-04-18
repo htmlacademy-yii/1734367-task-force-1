@@ -70,7 +70,7 @@ class City extends ActiveRecord
     /**
      * @return array
      */
-    public static function getCities(): array
+    public static function getCitiesList(): array
     {
         $cities = self::find()->asArray()->all();
         return ArrayHelper::map($cities, 'id', 'city');

@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property int $category_id
  * @property int|null $status_id
  * @property int $cost
+ * @property string $icon
  * @property int $customer_id
  * @property int|null $performer_id
  * @property int|null $city_id
@@ -57,9 +58,11 @@ class Task extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'category_id', 'cost', 'customer_id', 'date_limit'], 'required'],
-            [['category_id', 'status_id', 'cost', 'customer_id', 'performer_id', 'city_id'], 'integer'],
-            [['geo_latitude', 'geo_longitude'], 'number'],
+            [['title', 'content', 'category_id', 'cost', 'icon', 'customer_id', 'date_limit'], 'required'],
+            [['category_id', 'status_id', 'customer_id', 'performer_id', 'city_id'], 'integer'],
+            [['cost'], 'number'],
+            [['icon'], 'string'],
+            [['geo_latitude', 'geo_longitude'], 'double'],
             [['date_limit', 'date_published', 'created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 30],
             [['content'], 'string', 'max' => 255],
@@ -83,6 +86,7 @@ class Task extends ActiveRecord
             'category_id' => 'ID категории',
             'status_id' => 'ID статуса',
             'cost' => 'Цена',
+            'icon' => 'Аватар категории',
             'customer_id' => 'ID заказчика',
             'performer_id' => 'ID исполнителя',
             'city_id' => 'ID города',

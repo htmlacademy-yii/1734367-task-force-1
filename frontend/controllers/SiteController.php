@@ -38,7 +38,7 @@ class SiteController extends SecuredController
     {
         $loginForm = new LoginForm();
 
-        if (Yii::$app->request->isPost) {
+        if (Yii::$app->request->getIsPost()) {
             $loginForm->load(Yii::$app->request->post());
 
             if ($loginForm->validate()) {
