@@ -6,6 +6,7 @@ use frontend\forms\CreateTaskForm;
 use frontend\forms\TaskForm;
 use frontend\models\Category;
 use frontend\models\PathFile;
+use frontend\models\Profile;
 use frontend\models\Status;
 use frontend\models\Task;
 use Yii;
@@ -20,6 +21,27 @@ class TasksController extends SecuredController
     private $pathFile;
     /** @var string[] */
     private $fileName;
+
+    public function behaviors()
+    {
+        $rules = parent::behaviors();
+
+        $rule = [
+            'actions' => ['create'],
+            'allow' => true,
+            'matchCallback' => function ($rule, $action) {
+                $id = Yii::$app->user->id;
+                $profile = Profile::findOne(['user_id' => $id]);
+
+                return $profile->role === Profile::ROLE_CUSTOMER;
+            }
+        ];
+
+        $rules['access']['only'][] = 'create';
+        $rules['access']['rules'][] = $rule;
+
+        return $rules;
+    }
 
     public function actionIndex()
     {
