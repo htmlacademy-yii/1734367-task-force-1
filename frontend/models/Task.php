@@ -39,6 +39,17 @@ use yii\db\ActiveRecord;
  */
 class Task extends ActiveRecord
 {
+    /** Статус задания: новое (заказчик) */
+    const STATUS_NEW = 1;
+    /** Статус задания: отменено (заказчик) */
+    const STATUS_CANCEL = 2;
+    /** Статус задания: выполнено (заказчик) */
+    const STATUS_DONE = 3;
+    /** Статус задания: в работе (исполнитель) */
+    const STATUS_ACTIVE = 4;
+    /** Статус задания: провалено (исполнитель) */
+    const STATUS_FAIL = 5;
+
     public const ONE_DAY = 'oneDay';
     public const ONE_WEEK = 'oneWeek';
     public const ONE_MONTH = 'oneMonth';

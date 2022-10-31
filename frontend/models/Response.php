@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property int $task_id
  * @property int|null $performer_id
+ * @property int|null status
  * @property int|null $performer_cost
  * @property string|null $performer_comment
  * @property string|null $created_at
@@ -21,6 +22,17 @@ use yii\db\ActiveRecord;
  */
 class Response extends ActiveRecord
 {
+    /** Статус отклика: не выбран */
+    const STATUS_UNKNOW = 0;
+    /** Статус отклика: отказать претенденту (заказчик) */
+    const STATUS_REFUSE = 10;
+    /** Статус отклика: выбрать претендента (заказчик) */
+    const STATUS_CONFIRM = 11;
+    /** Статус отклика: отказаться от задания (исполнитель) */
+    const STATUS_REFUSED = 12;
+    /** Статус отклика: завершил задание (исполнитель) */
+    const STATUS_COMPLETED = 13;
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +48,7 @@ class Response extends ActiveRecord
     {
         return [
             [['task_id'], 'required'],
-            [['task_id', 'performer_id', 'performer_cost'], 'integer'],
+            [['task_id', 'performer_id', 'status', 'performer_cost'], 'integer'],
             [['created_at'], 'safe'],
             [['performer_comment'], 'string', 'max' => 255],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::class, 'targetAttribute' => ['task_id' => 'id']],
@@ -53,6 +65,7 @@ class Response extends ActiveRecord
             'id' => 'ID',
             'task_id' => 'ID задания',
             'performer_id' => 'ID исполнителя',
+            'status' => 'Статус исполнителя',
             'performer_cost' => 'Цена исполнителя',
             'performer_comment' => 'Комментарий исполнителя',
             'created_at' => 'Время создания',

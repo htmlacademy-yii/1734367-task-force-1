@@ -71,9 +71,21 @@ class TasksController extends SecuredController
             throw new NotFoundHttpException();
         }
 
+        $isPrePerformer = false;
+        foreach($task->responses as $response) {
+            if ($response->performer->id === Yii::$app->user->id) {
+                $isPrePerformer = true;
+                break;
+            }
+        }
+
         return $this->render('view', [
             'title' => 'Задание',
             'task' => $task,
+            'userId' => Yii::$app->user->id,
+            'isCustomerTask' => $task->customer_id === Yii::$app->user->id,
+            'isPrePerformer' => $isPrePerformer,
+            'isPerformer' => $task->performer_id === Yii::$app->user->id,
         ]);
     }
 
