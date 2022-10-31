@@ -1,12 +1,17 @@
 <?php
 
 use frontend\models\Task;
+use frontend\models\Response;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
 /* @var View $this */
 /* @var string $title */
+/* @var int $userId */
+/* @var bool $isCustomerTask */
+/* @var bool $isPrePerformer */
+/* @var bool $isPerformer */
 /* @var Task $task */
 
 $this->title = $title;
@@ -58,56 +63,75 @@ $regDateFormatter = implode(' ', $regDateList);
           </div>
         </div>
       </div>
+
       <div class="content-view__action-buttons">
-        <button class=" button button__big-color response-button open-modal"
-                type="button" data-for="response-form">Откликнуться
-        </button>
-        <button class="button button__big-color refusal-button open-modal"
-                type="button" data-for="refuse-form">Отказаться
-        </button>
-        <button class="button button__big-color request-button open-modal"
-                type="button" data-for="complete-form">Завершить
-        </button>
+        <?php if ($task->status_id === Task::STATUS_NEW && !$isCustomerTask && !$isPrePerformer) { ?>
+            <a href="<?= Url::to(['responses/accept', 'taskId' => $task->id, 'performerId' => $userId]); ?>"
+               class=" button button__big-color response-button open-modal"
+               type="button" data-for="response-form">Откликнуться
+            </a>
+        <?php } ?>
+        <?php if ($task->status_id === Task::STATUS_ACTIVE && $isPerformer) { ?>
+            <a href="<?= Url::to(['responses/failure', 'taskId' => $task->id, 'performerId' => $userId]); ?>"
+               class="button button__big-color refusal-button open-modal"
+               type="button" data-for="refuse-form">Отказаться
+            </a>
+        <?php } ?>
+        <?php if (!in_array($task->status_id, [Task::STATUS_CANCEL, Task::STATUS_DONE], true) && $isCustomerTask) { ?>
+            <a href="<?= Url::to(['responses/complete', 'taskId' => $task->id, 'customerId' => $userId]); ?>"
+               class="button button__big-color request-button open-modal"
+               type="button" data-for="complete-form">Завершить
+            </a>
+        <?php } ?>
       </div>
-    </div>
-    <div class="content-view__feedback">
-      <h2>Отклики <span><?= Html::encode(count($task->responses)) ?></span></h2>
-      <div class="content-view__feedback-wrapper">
 
-        <?php foreach($task->responses as $response): ?>
-            <div class="content-view__feedback-card">
-              <div class="feedback-card__top">
-                <a href="<?= Url::to(['users/view', 'id' => $response->performer->id]); ?>">
-                    <img src="<?= Html::encode($response->performer->profiles->avatar) ?>" width="55" height="55" alt="Аватар исполнителя">
-                </a>
-                <div class="feedback-card__top--name">
-                  <p>
-                      <a href="<?= Url::to(['users/view', 'id' => $response->performer->id]); ?>" class="link-regular">
-                          <?= Html::encode($response->performer->name) ?>
-                      </a>
-                  </p>
-                  <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                  <b><?= Html::encode($response->performer->profiles->rating) ?></b>
-                </div>
-                <span class="new-task__time">
-                    <?= Html::encode(Yii::$app->formatter->format(strtotime($response->performer->profiles->last_activity), 'relativeTime')) ?>
-                </span>
-              </div>
-              <div class="feedback-card__content">
-                  <p><?= Html::encode($response->performer_comment) ?></p>
-                  <span><?= Html::encode($response->performer_cost) ?> ₽</span>
-              </div>
-              <div class="feedback-card__actions">
-                <a class="button__small-color request-button button"
-                   type="button">Подтвердить</a>
-                <a class="button__small-color refusal-button button"
-                   type="button">Отказать</a>
-              </div>
+    </div>
+    <?php if ($isCustomerTask || $isPrePerformer) { ?>
+        <div class="content-view__feedback">
+            <h2>Отклики <span><?= Html::encode(count($task->responses)) ?></span></h2>
+            <div class="content-view__feedback-wrapper">
+
+                <?php foreach($task->responses as $response): ?>
+                    <div class="content-view__feedback-card">
+                        <?php if ($isCustomerTask || $response->performer->id === $userId) { ?>
+                            <div class="feedback-card__top">
+                                <a href="<?= Url::to(['users/view', 'id' => $response->performer->id]); ?>">
+                                    <img src="<?= Html::encode($response->performer->profiles->avatar) ?>" width="55" height="55" alt="Аватар исполнителя">
+                                </a>
+                                <div class="feedback-card__top--name">
+                                    <p>
+                                        <a href="<?= Url::to(['users/view', 'id' => $response->performer->id]); ?>" class="link-regular">
+                                            <?= Html::encode($response->performer->name) ?>
+                                        </a>
+                                    </p>
+                                    <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
+                                    <b><?= Html::encode($response->performer->profiles->rating) ?></b>
+                                </div>
+                                <span class="new-task__time">
+                                <?= Html::encode(Yii::$app->formatter->format(strtotime($response->performer->profiles->last_activity), 'relativeTime')) ?>
+                            </span>
+                            </div>
+                            <div class="feedback-card__content">
+                                <p><?= Html::encode($response->performer_comment) ?></p>
+                                <span><?= Html::encode($response->performer_cost) ?> ₽</span>
+                            </div>
+                            <?php if ($isCustomerTask && $response->status === Response::STATUS_UNKNOW && $task->performer_id === null) { ?>
+                                <div class="feedback-card__actions">
+                                    <a href="<?= Url::to(['responses/confirm-performer', 'taskId' => $task->id, 'performerId' => $response->performer->id]); ?>"
+                                       class="button__small-color request-button button"
+                                       type="button">Подтвердить</a>
+                                    <a href="<?= Url::to(['responses/refuse-performer', 'taskId' => $task->id, 'performerId' => $response->performer->id]); ?>"
+                                       class="button__small-color refusal-button button"
+                                       type="button">Отказать</a>
+                                </div>
+                            <?php } ?>
+                        <?php } ?>
+                    </div>
+                <?php endforeach; ?>
+
             </div>
-        <?php endforeach; ?>
-
-      </div>
-    </div>
+        </div>
+    <?php } ?>
 </section>
 <section class="connect-desk">
     <div class="connect-desk__profile-mini">
