@@ -18,8 +18,8 @@ use yii\db\ActiveRecord;
  * @property int $customer_id
  * @property int|null $performer_id
  * @property int|null $city_id
- * @property float|null $geo_latitude
- * @property float|null $geo_longitude
+ * @property string|null $location
+ * @property string|null $geo_location
  * @property string $date_limit
  * @property string|null $date_published
  * @property string|null $created_at
@@ -72,8 +72,7 @@ class Task extends ActiveRecord
             [['title', 'content', 'category_id', 'cost', 'icon', 'customer_id', 'date_limit'], 'required'],
             [['category_id', 'status_id', 'customer_id', 'performer_id', 'city_id'], 'integer'],
             [['cost'], 'number'],
-            [['icon'], 'string'],
-            [['geo_latitude', 'geo_longitude'], 'double'],
+            [['icon', 'location', 'geo_location'], 'string'],
             [['date_limit', 'date_published', 'created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 30],
             [['content'], 'string', 'max' => 255],
@@ -101,8 +100,8 @@ class Task extends ActiveRecord
             'customer_id' => 'ID заказчика',
             'performer_id' => 'ID исполнителя',
             'city_id' => 'ID города',
-            'geo_latitude' => 'Широта',
-            'geo_longitude' => 'Долгота',
+            'location' => 'Локация выполнения задания',
+            'geo_location' => 'Координаты локации',
             'date_limit' => 'Дата выполнения',
             'date_published' => 'Дата публикации',
             'created_at' => 'Время создания',

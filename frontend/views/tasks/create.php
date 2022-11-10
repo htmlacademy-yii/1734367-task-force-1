@@ -4,8 +4,10 @@ use frontend\forms\CreateTaskForm;
 use frontend\models\Category;
 use yii\bootstrap4\Html;
 use yii\jui\DatePicker;
+use yii\web\JsExpression;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use yii\helpers\Url;
 
 /* @var View $this */
 /* @var string $title */
@@ -70,8 +72,21 @@ $this->title = $title;
             <?=
                 $form->field($createTaskForm, 'location', [
                     'template' => "{label}{input}<span class='field-createtaskform-location required has-error'>{error}</span>"
-                ])->textInput(['class' => 'input-navigation input-middle input', 'type' => 'search'])
-                    ->label('Локация');
+                ])->widget(\yii\jui\AutoComplete::className(), [
+                    'name'=>'name',
+                    'options' => ['placeholder' => 'Поиск по АП...'],
+                    'clientOptions' => [
+                        'source' => new JsExpression("function(request, response) {
+                            $.getJSON('".Url::to(['ajax/location'])."', {
+                                term: request.term
+                            }, response);
+                        }"),
+                    ],
+                ])->textInput([
+                    'class' => 'input-navigation input-middle input',
+                    'type' => 'search',
+                    'placeholder' => 'Укажите адрес',
+                ])->label('Локация');
             ?>
 
             <div class="create__price-time">
@@ -117,12 +132,6 @@ $this->title = $title;
                 <p>Если загружаете фотографии объекта, то убедитесь,
                     что всё в фокусе, а фото показывает объект со всех
                     ракурсов.</p>
-            </div>
-            <div class="warning-item warning-item--error">
-                <h2>Ошибки заполнения формы</h2>
-                <h3>Категория</h3>
-                <p>Это поле должно быть выбрано.<br>
-                    Задание должно принадлежать одной из категорий</p>
             </div>
         </div>
     </div>
