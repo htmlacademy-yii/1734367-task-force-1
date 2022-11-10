@@ -19,10 +19,10 @@ class CreateTaskForm extends Model
         return [
             [['title'], 'required', 'message' => 'Кратко опишите суть работы'],
             [['content'], 'required', 'message' => 'Укажите все пожелания и детали, чтобы исполнителям было проще соориентироваться'],
-//            [['location'], 'required', 'message' => 'Укажите адрес исполнения, если задание требует присутствия'],
+            [['location'], 'required', 'message' => 'Укажите адрес исполнения'],
             [['cost'], 'required', 'message' => 'Не заполняйте для оценки исполнителем'],
             [['date_limit'], 'required', 'message' => 'Укажите крайний срок исполнения'],
-            [['category_id'], 'required'],
+            [['category_id'], 'required', 'message' => 'Укажите категорию задания'],
             [['title', 'content'], 'string', 'min' => 5],
             [
                 ['files'], 'file', 'extensions' => ['doc', 'docx', 'xls', 'xlsx', 'pdf', 'txt', 'png', 'jpg', 'jpeg', 'gif'],

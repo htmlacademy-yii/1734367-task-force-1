@@ -113,11 +113,14 @@ class TasksController extends SecuredController
                 $task->city_id = Yii::$app->user->identity->city_id;
                 $task->date_limit = $createTaskForm->date_limit;
                 $task->date_published = date("Y-m-d H:i:s");
-
-                $this->uploadFiles = $createTaskForm->files;
+                $task->location = $createTaskForm->location;
+                $task->geo_location = $this->getGeoLocation($createTaskForm->location);
 
                 if ($task->save()) {
-                    $this->saveFiles($task);
+                    if (count($createTaskForm->files)) {
+                        $this->uploadFiles = $createTaskForm->files;
+                        $this->saveFiles($task);
+                    }
 
                     return $this->redirect(['tasks/index']);
                 }
@@ -153,5 +156,12 @@ class TasksController extends SecuredController
 
         $this->pathFile = ('/uploads/' . $newname);
         $this->fileName = $newname;
+    }
+
+    private function getGeoLocation(string $location): string
+    {
+        $yandexService = new YandexService();
+
+        return $yandexService->getGeoPoint($location);
     }
 }
