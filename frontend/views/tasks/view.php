@@ -24,6 +24,7 @@ $regDateFormatter = implode(' ', $regDateList);
 
 <head>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=e666f398-c983-4bde-8f14-e3fec900592a&lang=ru_RU" type="text/javascript"></script>
+    <script src="/frontend/web/js/messenger.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         var asd = [ <?= $task->geo_location ?> ];
@@ -174,6 +175,6 @@ $regDateFormatter = implode(' ', $regDateList);
     </div>
     <div id="chat-container">
       <!-- добавьте сюда атрибут task с указанием в нем id текущего задания -->
-      <chat class="connect-desk__chat"></chat>
+      <chat class="connect-desk__chat"><?= Html::encode($task->id); ?></chat>
     </div>
 </section>
