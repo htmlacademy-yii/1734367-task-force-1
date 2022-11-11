@@ -41,19 +41,33 @@ class Task extends ActiveRecord
 {
     /** Статус задания: новое (заказчик) */
     const STATUS_NEW = 1;
+    const STATUS_NEW_TEXT = 'new';
     /** Статус задания: отменено (заказчик) */
     const STATUS_CANCEL = 2;
+    const STATUS_CANCEL_TEXT = 'cancel';
     /** Статус задания: выполнено (заказчик) */
     const STATUS_DONE = 3;
+    const STATUS_DONE_TEXT = 'done';
     /** Статус задания: в работе (исполнитель) */
     const STATUS_ACTIVE = 4;
+    const STATUS_ACTIVE_TEXT = 'active';
     /** Статус задания: провалено (исполнитель) */
     const STATUS_FAIL = 5;
+    const STATUS_FAIL_TEXT = 'text';
 
     public const ONE_DAY = 'oneDay';
     public const ONE_WEEK = 'oneWeek';
     public const ONE_MONTH = 'oneMonth';
     public const ONE_YEAR = 'oneYear';
+
+    /** Массив соответствия наименования статусов задания и их идентификаторов */
+    const STATUSES = [
+        self::STATUS_NEW_TEXT => self::STATUS_NEW,
+        self::STATUS_CANCEL_TEXT => self::STATUS_CANCEL,
+        self::STATUS_DONE_TEXT => self::STATUS_DONE,
+        self::STATUS_ACTIVE_TEXT => self::STATUS_ACTIVE,
+        self::STATUS_FAIL_TEXT => self::STATUS_FAIL,
+    ];
 
     /**
      * {@inheritdoc}

@@ -117,7 +117,7 @@ $user = Yii::$app->user->identity;
             <div class="account__pop-up">
                 <ul class="account__pop-up-list">
                     <li>
-                        <a href="#">Мои задания</a>
+                        <a href="<?= Url::to(['mylist/index']); ?>">Мои задания</a>
                     </li>
                     <li>
                         <a href="#">Настройки</a>
