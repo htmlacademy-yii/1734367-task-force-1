@@ -70,21 +70,11 @@ class Message extends ActiveRecord
     }
 
     /**
-     * Gets query for User.
-     *
-     * @return ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(Task::class, ['customer_id' => 'user_id']);
-    }
-
-    /**
      * Gets query for User0.
      *
      * @return ActiveQuery
      */
-    public function getUser0()
+    public function getUser()
     {
         return $this->hasOne(Task::class, ['performer_id' => 'user_id']);
     }
