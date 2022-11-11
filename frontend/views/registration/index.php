@@ -32,7 +32,7 @@ $this->title = $title;
                     'template' => "{label}{input}<span class='field-registrationform-email required has-error'>{error}</span>",
                 ])
                 ->textInput(['class' => 'input textarea', 'rows' => '1', 'placeholder' => 'Укажите Email'])
-                ->label('ЭЛЕКТРОННАЯ ПОЧТА', ['style' => 'margin-top: 0px;']); ?>
+                ->label('ЭЛЕКТРОННАЯ ПОЧТА', ['style' => 'margin-top: 0px;']) ?>
 
             <!-- Имя -->
             <?= $form->field($registrationForm, 'name', [
