@@ -265,7 +265,7 @@ $loginForm = new LoginForm();
             <p><?= $form->field($loginForm, 'email')->textInput(['type' => 'email']); ?></p>
             <p><?= $form->field($loginForm, 'password')->textInput(['type' => 'password']); ?></p>
             <?= Html::submitButton('Войти', ['class' => 'button']); ?>
-            <a href="<?= Url::to(['site/auth']); ?>" >Войти через VK</a>
+            <a href="https://oauth.vk.com/authorize?client_id=51474476&display=page&redirect_uri=http://yii-taskforce/site/verify&scope=friends&response_type=code&v=5.131" >Войти через VK</a>
         <?php ActiveForm::end(); ?>
         <?= Html::submitButton('Закрыть', ['class' => 'form-modal-close']); ?>
 
