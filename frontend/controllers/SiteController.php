@@ -68,9 +68,59 @@ class SiteController extends SecuredController
         return $this->redirect(['landing/index']);
     }
 
-    public function actionAuth()
+    public function actionVerify()
     {
-        //
+        if (Yii::$app->request->getIsGet()) {
+            // Получение code
+            $code = Yii::$app->request->get();
+
+            // Получение access_token
+            $params = [
+                'client_id' => 51474476,
+                'client_secret' => 'JaiEUodX72fVGph1cA54',
+                'code' => $code['code'],
+                'redirect_uri' => 'http://yii-taskforce/site/verify',
+            ];
+            $client = new Client();
+            $url = "https://oauth.vk.com/access_token?client_id={$params['client_id']}&client_secret={$params['client_secret']}&redirect_uri={$params['redirect_uri']}&code={$params['code']}";
+            $response = $client->post($url);
+            $contentJson = $response->getBody()->getContents();
+            $content = json_decode($contentJson);
+
+
+            // Получения дополнительных данных о пользователе.
+            $params2 = [
+                'uids' => $content->user_id,
+                'fields' => 'uid,first_name,last_name,screen_name,bdate,city',
+                'access_token' => $content->access_token,
+                'v' => '5.101',
+            ];
+            $url2 = "https://api.vk.com/method/users.get?uids={$params2['uids']}&fields={$params2['fields']}&access_token={$params2['access_token']}&v={$params2['v']}";
+            $response2 = $client->post($url2);
+            $contentJson2 = $response2->getBody()->getContents();
+            $content2 = json_decode($contentJson2);
+
+            // Обработка данных
+            $res = [];
+            foreach ($content2->response as $item) {
+                $res = [
+                    'id' => $item->id,
+                    'bdate' => $item->bdate,
+                    'first_name' => $item->first_name,
+                    'last_name' => $item->last_name,
+                    'city' => $item->city->title,
+                ];
+            }
+
+            dd($res);
+
+
+            //
+
+        }
+        dd($code);
+        // https://kotoff.net/article/39-avtorizacija-na-sajte-s-pomoschju-vk-prostoj-i-ponjatnyj-sposob-na-php.html
+
     }
 
 //    /**
