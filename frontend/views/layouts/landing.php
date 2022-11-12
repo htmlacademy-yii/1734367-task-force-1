@@ -265,6 +265,7 @@ $loginForm = new LoginForm();
             <p><?= $form->field($loginForm, 'email')->textInput(['type' => 'email']); ?></p>
             <p><?= $form->field($loginForm, 'password')->textInput(['type' => 'password']); ?></p>
             <?= Html::submitButton('Войти', ['class' => 'button']); ?>
+            <a href="<?= Url::to(['site/auth']); ?>" >Войти через VK</a>
         <?php ActiveForm::end(); ?>
         <?= Html::submitButton('Закрыть', ['class' => 'form-modal-close']); ?>
 
