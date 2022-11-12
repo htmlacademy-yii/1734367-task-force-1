@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use GuzzleHttp\Client;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -65,6 +66,11 @@ class SiteController extends SecuredController
         Yii::$app->user->logout();
 
         return $this->redirect(['landing/index']);
+    }
+
+    public function actionAuth()
+    {
+        //
     }
 
 //    /**
