@@ -19,8 +19,12 @@ class AjaxController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         $value = Yii::$app->request->get('term');
-        $yandexService = new YandexService();
-        $addresses = $yandexService->getAddresses($value);
+
+        if (($addresses = Yii::$app->cache->get($value)) === false) {
+            $yandexService = new YandexService();
+            $addresses = $yandexService->getAddresses($value);
+            Yii::$app->cache->set($value, $addresses, 86400);
+        }
 
         return $this->asJson($addresses);
     }

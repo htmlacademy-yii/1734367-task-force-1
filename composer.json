@@ -23,7 +23,8 @@
         "yiisoft/yii2-bootstrap": "*",
         "guzzlehttp/guzzle": "^7.5",
       "ext-json": "*",
-        "yiisoft/yii2-authclient": "*"
+        "yiisoft/yii2-authclient": "*",
+        "yiisoft/yii2-redis": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
